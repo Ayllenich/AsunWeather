@@ -66,12 +66,18 @@ public class ChooseAreaActivity extends Activity{
      */
     private int currentLevel;
 
+    /**
+     *  是否从WeatherActivity中跳转过来。
+     */
+    private  boolean isFromWeatherActivity;
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
+        isFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity", false);//默认值为false,若是WeatherActivity跳转来的则值为true。
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if(prefs.getBoolean("city_selected", false)) {
+        //已经选择了成熟且不是从WeatherActivity跳转过来的,才会直接跳转到WeatherActivity。
+        if(prefs.getBoolean("city_selected", false) && !isFromWeatherActivity) {
             Intent intent = new Intent(this, WeatherActivity.class);
             startActivity(intent);
             finish();
@@ -250,6 +256,11 @@ public class ChooseAreaActivity extends Activity{
         } else if (currentLevel == LEVEL_CITY) {
             queryProvinces();
         } else {
+            //如果是从WeatherActivity中回来的则按下返回键就退出选择列表回到WeatherActivity(主界面)
+            if(isFromWeatherActivity) {
+                Intent intent = new Intent(this, WeatherActivity.class);
+                startActivity(intent);
+            }
             finish();
         }
     }
