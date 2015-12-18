@@ -97,15 +97,15 @@ public class AsunWeatherDB {
     /**
      * 从数据库读取某省下所有的城市信息
      */
-    public List<City> loadCity(int provinceId) {
+    public List<City> loadCities(int provinceId) {
         List<City> list = new ArrayList<City>();
         Cursor cursor = db.query("City", null, "province_id = ?", new String[] {String.valueOf(provinceId)}, null, null, null);
         if(cursor.moveToFirst()) {
             do {
                 City city = new City();
                 city.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                city.setCityName(cursor.getString(cursor.getColumnIndex(city.getCityName())));
-                city.setCityCode(cursor.getString(cursor.getColumnIndex(city.getCityCode())));
+                city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
+                city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
                 city.setProvinceId(provinceId);
                 list.add(city);
             } while (cursor.moveToNext());
