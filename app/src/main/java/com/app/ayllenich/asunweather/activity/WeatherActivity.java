@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.ayllenich.asunweather.R;
+import com.app.ayllenich.asunweather.service.AutoUpdateService;
 import com.app.ayllenich.asunweather.util.HttpCallbackListener;
 import com.app.ayllenich.asunweather.util.HttpUtil;
 import com.app.ayllenich.asunweather.util.Utility;
@@ -181,5 +182,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
 
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 }
